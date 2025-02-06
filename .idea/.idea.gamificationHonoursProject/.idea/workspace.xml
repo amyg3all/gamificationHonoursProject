@@ -7,49 +7,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8d233154-5fa0-4cea-b569-d5111009753a" name="Changes" comment="working sprite and set up - adding game states">
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.gamificationHonoursProject.dir/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.gamificationHonoursProject.dir/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.gamificationHonoursProject.dir/.idea/indexLayout.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.gamificationHonoursProject.dir/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.gamificationHonoursProject/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.mgstats" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Backgrounds/PSII.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Backgrounds/capillaryNetwork.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Backgrounds/etc.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Backgrounds/hydroPump.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Backgrounds/leaf.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Backgrounds/rootSystem.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Fonts/PixelFont.spritefont" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Fonts/pixelFont.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Objects/emptyHealth.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Objects/emptyKnowledge.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Objects/fullHealth.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Objects/fullKnowledge.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Objects/oneHealth.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Objects/oneKnowledge.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Objects/threeHealth.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Objects/threeKnowledge.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Objects/twoHealth.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Objects/twoKnowledge.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Other/pixelTextBox.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/SoundEffects/backgroundMusic.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/SoundEffects/fight.mp3" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Sprites/water.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Levels/Level.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Levels/LevelOne.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Levels/LevelTwo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.config/dotnet-tools.json" beforeDir="false" afterPath="$PROJECT_DIR$/.config/dotnet-tools.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Content.mgcb" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Content.mgcb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/waterv1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Game1.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Game1.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GameStates/GameOverState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GameStates/GameOverState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GameStates/GamePlayState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GameStates/GamePlayState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GameStates/MenuState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GameStates/MenuState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GameStates/PauseState.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GameStates/State.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GameStates/State.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GameStates/TitleScreenState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GameStates/TitleScreenState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gamificationHonoursProject.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/gamificationHonoursProject.csproj" afterDir="false" />
+    <list default="true" id="8d233154-5fa0-4cea-b569-d5111009753a" name="Changes" comment="all code so far - interim demo">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.gamificationHonoursProject/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.gamificationHonoursProject/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,7 +67,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;vcs.Git&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -148,7 +107,7 @@
       <workItem from="1730462592099" duration="31710000" />
       <workItem from="1731316996082" duration="42805000" />
       <workItem from="1735811358529" duration="55573000" />
-      <workItem from="1738756967938" duration="291000" />
+      <workItem from="1738756967938" duration="3228000" />
     </task>
     <task id="LOCAL-00001" summary="working sprite and set up - adding game states">
       <option name="closed" value="true" />
@@ -158,7 +117,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730378654486</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="all code so far - interim demo">
+      <option name="closed" value="true" />
+      <created>1738846039836</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1738846039836</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -198,7 +165,8 @@
     <option name="LOCAL_CHANGES_DETAILS_PREVIEW_SHOWN" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="working sprite and set up - adding game states" />
-    <option name="LAST_COMMIT_MESSAGE" value="working sprite and set up - adding game states" />
+    <MESSAGE value="all code so far - interim demo" />
+    <option name="LAST_COMMIT_MESSAGE" value="all code so far - interim demo" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
