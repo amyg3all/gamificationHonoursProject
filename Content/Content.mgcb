@@ -12,8 +12,107 @@
 
 
 #---------------------------------- Content ---------------------------------#
+#begin Title Screen background
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Backgrounds/TitleScreen.png
+
+#begin level1 background
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Backgrounds/rootSystem.png
+
+#begin level1 background2
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Backgrounds/capillaryNetwork.png
+
+#begin level2 background
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Backgrounds/leaf.png
+
+#begin level2 background2
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Backgrounds/PSII.png
+
+#begin level2 background3
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Backgrounds/etc.png
+
+#begin level2 background4
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Backgrounds/hydroPump.png
+
+#begin level1 platforms
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Objects/emptyHealth.png
+
+#begin level1 platforms
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Objects/emptyKnowledge.png
+
+#begin level1 platforms
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Objects/oneHealth.png
+
+#begin level1 platforms
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Objects/oneKnowledge.png
+
+#begin level1 platforms
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Objects/twoHealth.png
+
+#begin level1 platforms
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Objects/twoKnowledge.png
+
+#begin level1 platforms
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Objects/threeHealth.png
+
+#begin level1 platforms
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Objects/threeKnowledge.png
+
+#begin level1 platforms
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Objects/fullHealth.png
+
+#begin level1 platforms
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Objects/fullKnowledge.png
+
+#begin background music
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/build:SoundEffects/backgroundMusic.mp3
+
+#begin fight music
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/build:SoundEffects/fight.mp3
 
 #begin water molecule sprite
 /importer:TextureImporter
 /processor:TextureProcessor
-/build:waterv1.png
+/build:Sprites/water.png
+
+#begin text box sprite
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Other/pixelTextBox.png
