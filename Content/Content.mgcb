@@ -12,91 +12,223 @@
 
 
 #---------------------------------- Content ---------------------------------#
-#begin Title Screen background
+#--------------------------------- BACKGROUNDS ---------------------------------#
+#begin Title Screen
 /importer:TextureImporter
 /processor:TextureProcessor
 /build:Backgrounds/TitleScreen.png
 
-#begin level1 background
+#begin Root system
 /importer:TextureImporter
 /processor:TextureProcessor
 /build:Backgrounds/rootSystem.png
 
-#begin level1 background2
+#begin capillary network
 /importer:TextureImporter
 /processor:TextureProcessor
 /build:Backgrounds/capillaryNetwork.png
 
-#begin level2 background
+#begin leaf
 /importer:TextureImporter
 /processor:TextureProcessor
 /build:Backgrounds/leaf.png
 
-#begin level2 background2
+#begin PSII
 /importer:TextureImporter
 /processor:TextureProcessor
 /build:Backgrounds/PSII.png
 
-#begin level2 background3
+#begin elctron transfer chain
 /importer:TextureImporter
 /processor:TextureProcessor
 /build:Backgrounds/etc.png
 
-#begin level2 background4
+#begin level one help
 /importer:TextureImporter
 /processor:TextureProcessor
-/build:Backgrounds/hydroPump.png
+/build:Backgrounds/levelOneHelp.png
 
-#begin level1 platforms
+#begin level two help
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Backgrounds/levelTwoHelp.png
+
+#begin level three help
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Backgrounds/levelThreeHelp.png
+
+#begin cut scenes
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Backgrounds/cutscene.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Backgrounds/cutscene0.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Backgrounds/cutscene1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Backgrounds/cutscene2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Backgrounds/cutscene3.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Backgrounds/cutscene4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Backgrounds/cutscene5.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Backgrounds/cutscene6.png
+
+#begin level three help
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Backgrounds/chloroplastInside.png
+
+#begin level four 
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Backgrounds/guardCellOpen.png
+#begin level four
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Backgrounds/guardCellClosed.png
+
+#--------------------------------- OBJECTS ---------------------------------#
+
+#begin Health bar
 /importer:TextureImporter
 /processor:TextureProcessor
 /build:Objects/emptyHealth.png
 
-#begin level1 platforms
+#begin knowledge bar
 /importer:TextureImporter
 /processor:TextureProcessor
 /build:Objects/emptyKnowledge.png
 
-#begin level1 platforms
 /importer:TextureImporter
 /processor:TextureProcessor
 /build:Objects/oneHealth.png
 
-#begin level1 platforms
 /importer:TextureImporter
 /processor:TextureProcessor
 /build:Objects/oneKnowledge.png
 
-#begin level1 platforms
 /importer:TextureImporter
 /processor:TextureProcessor
 /build:Objects/twoHealth.png
 
-#begin level1 platforms
 /importer:TextureImporter
 /processor:TextureProcessor
 /build:Objects/twoKnowledge.png
 
-#begin level1 platforms
 /importer:TextureImporter
 /processor:TextureProcessor
 /build:Objects/threeHealth.png
 
-#begin level1 platforms
 /importer:TextureImporter
 /processor:TextureProcessor
 /build:Objects/threeKnowledge.png
 
-#begin level1 platforms
 /importer:TextureImporter
 /processor:TextureProcessor
 /build:Objects/fullHealth.png
 
-#begin level1 platforms
 /importer:TextureImporter
 /processor:TextureProcessor
 /build:Objects/fullKnowledge.png
 
+#begin battery bar
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Objects/emptyBattery.png
+
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Objects/halfBattery.png
+
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Objects/fullBattery.png
+
+#begin cell charges
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Objects/cellOne.png
+
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Objects/cellTwo.png
+
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Objects/cellThree.png
+
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Objects/cellFour.png
+
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Objects/cellFive.png
+
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Objects/cellSix.png
+
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Objects/cellSeven.png
+
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Objects/cellEight.png
+
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Objects/cellNine.png
+
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Objects/cellTen.png
+
+# begin count down
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Objects/one.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Objects/two.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Objects/three.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Objects/four.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Objects/five.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Objects/six.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Objects/seven.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Objects/eight.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Objects/nine.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Objects/ten.png
+
+#---------------------------------- MUSIC ---------------------------------#
 #begin background music
 /importer:Mp3Importer
 /processor:SoundEffectProcessor
@@ -107,12 +239,48 @@
 /processor:SoundEffectProcessor
 /build:SoundEffects/fight.mp3
 
+#--------------------------------- SPRITES ---------------------------------#
 #begin water molecule sprite
 /importer:TextureImporter
 /processor:TextureProcessor
 /build:Sprites/water.png
 
-#begin text box sprite
+#begin electron
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Sprites/electron.png
+
+#begin calvin substrates
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Sprites/calvinOne.png
+
+#begin calvin substrates
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Sprites/calvinTwo.png
+
+#begin calvin substrates
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Sprites/calvinThree.png
+
+#begin calvin substrates
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Sprites/calvinFour.png
+
+#begin calvin substrates
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Sprites/calvinFive.png
+
+#--------------------------------- OTHER ---------------------------------#
+#begin text box
 /importer:TextureImporter
 /processor:TextureProcessor
 /build:Other/pixelTextBox.png
+
+/importer:TextureImporter
+/processor:TextureProcessor
+/build:Other/fightTextBox.png

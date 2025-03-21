@@ -8,7 +8,84 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8d233154-5fa0-4cea-b569-d5111009753a" name="Changes" comment="all code so far - interim demo">
+      <change afterPath="$PROJECT_DIR$/Content/Backgrounds/chloroplastInside.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Backgrounds/cutscene.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Backgrounds/cutscene0.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Backgrounds/cutscene1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Backgrounds/cutscene2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Backgrounds/cutscene3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Backgrounds/cutscene4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Backgrounds/cutscene5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Backgrounds/cutscene6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Backgrounds/guardCellClosed.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Backgrounds/guardCellOpen.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Backgrounds/levelOneHelp.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Backgrounds/levelThreeHelp.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Backgrounds/levelTwoHelp.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Objects/cellEight.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Objects/cellFive.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Objects/cellFour.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Objects/cellNine.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Objects/cellOne.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Objects/cellSeven.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Objects/cellSix.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Objects/cellTen.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Objects/cellThree.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Objects/cellTwo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Objects/eight.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Objects/emptyBattery.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Objects/five.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Objects/four.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Objects/fullBattery.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Objects/halfBattery.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Objects/nine.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Objects/one.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Objects/seven.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Objects/six.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Objects/ten.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Objects/three.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Objects/two.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Other/fightTextBox.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Sprites/calvinFive.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Sprites/calvinFour.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Sprites/calvinOne.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Sprites/calvinThree.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Sprites/calvinTwo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Sprites/electron.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Levels/LevelFour.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Levels/LevelThree.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Levels/LevelZero.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.gamificationHonoursProject/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.gamificationHonoursProject/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Backgrounds/PSII.png" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Backgrounds/PSII.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Backgrounds/capillaryNetwork.png" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Backgrounds/capillaryNetwork.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Backgrounds/etc.png" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Backgrounds/etc.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Backgrounds/hydroPump.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Backgrounds/leaf.png" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Backgrounds/leaf.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Backgrounds/rootSystem.png" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Backgrounds/rootSystem.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Content.mgcb" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Content.mgcb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Objects/emptyHealth.png" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Objects/emptyHealth.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Objects/emptyKnowledge.png" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Objects/emptyKnowledge.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Objects/fullHealth.png" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Objects/fullHealth.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Objects/fullKnowledge.png" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Objects/fullKnowledge.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Objects/oneHealth.png" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Objects/oneHealth.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Objects/oneKnowledge.png" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Objects/oneKnowledge.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Objects/threeHealth.png" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Objects/threeHealth.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Objects/threeKnowledge.png" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Objects/threeKnowledge.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Objects/twoHealth.png" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Objects/twoHealth.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Objects/twoKnowledge.png" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Objects/twoKnowledge.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Other/pixelTextBox.png" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Other/pixelTextBox.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Sprites/water.png" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Sprites/water.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game1.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Game1.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameStates/GameOverState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GameStates/GameOverState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameStates/GamePlayState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GameStates/GamePlayState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameStates/MenuState.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameStates/State.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GameStates/State.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameStates/TitleScreenState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GameStates/TitleScreenState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Levels/Level.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Levels/Level.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Levels/LevelOne.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Levels/LevelOne.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Levels/LevelTwo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Levels/LevelTwo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.manifest" beforeDir="false" afterPath="$PROJECT_DIR$/app.manifest" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gamificationHonoursProject.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/gamificationHonoursProject.csproj" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +144,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;vcs.Git&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.github.ui.GithubSettingsConfigurable&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -107,7 +184,15 @@
       <workItem from="1730462592099" duration="31710000" />
       <workItem from="1731316996082" duration="42805000" />
       <workItem from="1735811358529" duration="55573000" />
-      <workItem from="1738756967938" duration="4482000" />
+      <workItem from="1738756967938" duration="35636000" />
+      <workItem from="1740566366659" duration="4177000" />
+      <workItem from="1740650864910" duration="10783000" />
+      <workItem from="1741602952602" duration="23539000" />
+      <workItem from="1741703074682" duration="11014000" />
+      <workItem from="1741780471218" duration="24675000" />
+      <workItem from="1742560340584" duration="649000" />
+      <workItem from="1742561003210" duration="18000" />
+      <workItem from="1742561183783" duration="1545000" />
     </task>
     <task id="LOCAL-00001" summary="working sprite and set up - adding game states">
       <option name="closed" value="true" />

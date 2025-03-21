@@ -1,14 +1,16 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.Serialization.Json;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SpriteFontPlus;
 
 namespace gamificationHonoursProject.Levels;
 
+/// <summary>
+/// abstract state machine to handle all levels,
+/// each state is intended to be independent of one another for code clarity
+/// </summary>
 public abstract class Level
 {
     private SpriteFont _pixelFont;
@@ -86,7 +88,7 @@ public abstract class Level
     }
 
     // the text can only be max 420 char long equal to six sentences of 70 chars
-    public void WriteTextBox(SpriteBatch spriteBatch, String inputText, Texture2D textBox)
+    public void WriteTextBox(SpriteBatch spriteBatch, string inputText, Texture2D textBox)
     {
         var screenWidth = game.GraphicsDevice.Viewport.Width;
         var screenHeight = game.GraphicsDevice.Viewport.Height;
@@ -103,7 +105,7 @@ public abstract class Level
         foreach (var word in words)
         {
             // Check if adding the current word exceeds the max length
-            if ((currentString.Length + word.Length + 1) > 69)
+            if (currentString.Length + word.Length + 1 > 69)
             {
                 // Add the current string to the result and start a new string
                 result.Add(currentString.Trim());
@@ -114,10 +116,7 @@ public abstract class Level
             currentString += word + " ";
         }
 
-        if (!string.IsNullOrWhiteSpace(currentString))
-        {
-            result.Add(currentString.Trim());
-        }
+        if (!string.IsNullOrWhiteSpace(currentString)) result.Add(currentString.Trim());
 
         var allSentences = result.Take(6).ToList();
 
@@ -158,4 +157,52 @@ public abstract class Level
                 break;
         }
     }
+    
+    public void WriteTextBox(SpriteBatch spriteBatch, string question, string optionA, string optionB, string optionC, Texture2D textBox)
+    {
+        var screenWidth = game.GraphicsDevice.Viewport.Width;
+        var screenHeight = game.GraphicsDevice.Viewport.Height;
+        var boxWidth = (int)(screenWidth * 0.9);
+        var boxHeight = screenHeight;
+
+        var posX = (screenWidth - boxWidth) / 2 - 40;
+        var posY = screenHeight - boxHeight + 20;
+
+        // Split the question into multiple lines if needed
+        var words = question.Split(' ').ToList();
+        var result = new List<string>();
+        var currentString = "";
+
+        foreach (var word in words)
+        {
+            if (currentString.Length + word.Length + 1 > 69)
+            {
+                result.Add(currentString.Trim());
+                currentString = "";
+            }
+            currentString += word + " ";
+        }
+
+        if (!string.IsNullOrWhiteSpace(currentString)) 
+            result.Add(currentString.Trim());
+
+        var allSentences = result.Take(6).ToList();
+
+        // Draw the text box background
+        spriteBatch.Draw(textBox, new Rectangle(posX, posY, screenWidth, boxHeight), Color.White);
+
+        // Print the question (centered)
+        var initialPos = 120;
+        foreach (var sentence in allSentences)
+        {
+            WriteFontCentreSmaller(sentence, -75, initialPos, Color.Black);
+            initialPos += 20;
+        }
+
+        // Print the answer options on separate lines
+        WriteFontCentreSmaller(optionA, -75, initialPos + 0, Color.Black);
+        WriteFontCentreSmaller(optionB, -75, initialPos + 20, Color.Black);
+        WriteFontCentreSmaller(optionC, -75, initialPos + 40, Color.Black);
+    }
+
 }

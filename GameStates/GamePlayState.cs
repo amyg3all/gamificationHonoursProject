@@ -1,63 +1,55 @@
-using System.Net.NetworkInformation;
 using gamificationHonoursProject.Levels;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace gamificationHonoursProject.GameStates
+namespace gamificationHonoursProject.GameStates;
+
+/// <summary>
+/// Game Play Screen inherited state handles all logic for loading and updating the Title Screen
+/// </summary>
+public class GamePlayState : State
 {
-    /// <summary>
-    /// Game Play Screen inherited state handles all logic for loading and updating the Title Screen
-    /// </summary>
-    public class GamePlayState : State
+    private Level currentLevel;
+
+    public GamePlayState(Game1 game, int levelNumber)
+        : base(game)
     {
-        private KeyboardState _previousKeyboardState;
-        private Level currentLevel;
-
-        public GamePlayState(Game1 game, int levelNumber)
-            : base(game)
+        switch (levelNumber)
         {
-            switch (levelNumber)
-            {
-                case 1:
-                    currentLevel = new LevelOne(game);
-                    break;
-                case 2:
-                    currentLevel = new LevelTwo(game);
-                    break;
-                default:
-                    currentLevel = new LevelOne(game); // Default to LevelOne
-                    break;
-            }
+            case 0:
+                currentLevel = new LevelZero(game);
+                break;
+            case 1:
+                currentLevel = new LevelOne(game);
+                break;
+            case 2:
+                currentLevel = new LevelTwo(game);
+                break;
+            case 3:
+                currentLevel = new LevelThree(game);
+                break;
+            case 4:
+                currentLevel = new LevelFour(game);
+                break;
+            default:
+                currentLevel = new LevelOne(game); // Default to LevelOne
+                break;
         }
+    }
 
-        public override void LoadContent()
-        {
-            currentLevel.LoadContent();
-        }
+    public override void LoadContent()
+    {
+        currentLevel.LoadContent();
+    }
 
-        public override void Update(GameTime gameTime)
-        {
-            var currentKeyboardState = Keyboard.GetState();
+    public override void Update(GameTime gameTime)
+    {
+        currentLevel.Update(gameTime);
+    }
 
-            // Check if Enter is pressed and not held down
-            if (
-                currentKeyboardState.IsKeyDown(Keys.D)
-                && !_previousKeyboardState.IsKeyDown(Keys.Enter)
-            )
-            {
-                game.ChangeState(new GameOverState(game));
-            }
-
-            _previousKeyboardState = currentKeyboardState;
-            
-            currentLevel.Update(gameTime);
-        }
-
-        public override void Draw(GameTime gameTime)
-        {
-            game.GraphicsDevice.Clear(Color.Black);
-            currentLevel.Draw(game.SpriteBatch);
-        }
+    public override void Draw(GameTime gameTime)
+    {
+        game.GraphicsDevice.Clear(Color.Black);
+        currentLevel.Draw(game.SpriteBatch);
     }
 }
