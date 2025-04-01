@@ -11,9 +11,8 @@ namespace gamificationHonoursProject.Levels;
 public class LevelOne : Level
 {
     private double _elapsedTime = 0;
-    private double _elapsedTimetemp = 0;
+    private double _elapsedTimeTemp = 0;
     private double _beatTheClock = 0;
-    private int _currentScreenSequence = 0;
     private Texture2D _screenOne;
     private Texture2D _screenTwo;
     private Texture2D _screenThree;
@@ -27,6 +26,7 @@ public class LevelOne : Level
     public LevelOne(Game1 game)
         : base(game)
     {
+        _currentScreenSequence = 0;
     }
 
     public override void LoadContent()
@@ -45,18 +45,11 @@ public class LevelOne : Level
         _waterMoleculeSpeed = 100f;
     }
 
-    private void UpdateCurrentScreenSequence(int newScreenSequence)
-    {
-        if (newScreenSequence == _currentScreenSequence + 1)
-        {
-            _currentScreenSequence = newScreenSequence;
-        }
-    }
-
-    // slightly dangerous use with caution
+    // allows to flip back to start of going up the capillary if they get stuck
     private void ChangeCurrentScreenSequence(int newScreenSequence)
     {
-        if (_currentScreenSequence == 7) game.decreaseHealth();
+        if (_currentScreenSequence == 7)
+            game.DecreaseHealth();
         _waterMoleculePosition = new Vector2(
             game._graphics.PreferredBackBufferWidth / 2 - 20,
             game._graphics.PreferredBackBufferHeight / 2 + 215
@@ -68,18 +61,19 @@ public class LevelOne : Level
     {
         _elapsedTime += gameTime.ElapsedGameTime.TotalSeconds;
 
-        if (_elapsedTime > 2) UpdateCurrentScreenSequence(1);
+        if (_elapsedTime > 2)
+            UpdateCurrentScreenSequence(1);
 
         var currentKeyboardState = Keyboard.GetState();
 
-        // Check if Enter is pressed and not held down
-        _elapsedTimetemp += gameTime.ElapsedGameTime.TotalSeconds;
+        _elapsedTimeTemp += gameTime.ElapsedGameTime.TotalSeconds;
         _beatTheClock += gameTime.ElapsedGameTime.TotalSeconds;
 
+        // changes the sequence by pressing enter
         if (
             currentKeyboardState.IsKeyDown(Keys.Enter)
             && _previousKeyboardState.IsKeyUp(Keys.Enter)
-            && _elapsedTimetemp > 1.5
+            && _elapsedTimeTemp > 1.5
         )
             switch (_currentScreenSequence)
             {
@@ -94,32 +88,31 @@ public class LevelOne : Level
                     break;
                 case 4:
                     _beatTheClock = 0;
-                    game.startCountDown();
+                    game.StartCountDown();
                     UpdateCurrentScreenSequence(5);
                     break;
                 case 7:
-                    game.toggleHealthKnowledge(false);
+                    game.ToggleHealthKnowledge(false);
                     game.ChangeLevel();
+                    break;
+                case 8:
+                    ChangeCurrentScreenSequence(5);
                     break;
             }
 
-        if (
-            currentKeyboardState.IsKeyDown(Keys.Enter)
-            && _previousKeyboardState.IsKeyUp(Keys.Enter)
-            && _currentScreenSequence == 8
-        )
-        {
-            ChangeCurrentScreenSequence(5);
-        }
-
         _previousKeyboardState = currentKeyboardState;
 
+        // allows the water molecule to move
         var updatedWaterSpeed = _waterMoleculeSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
         var screenWidth = game.GraphicsDevice.Viewport.Width;
         var screenHeight = game.GraphicsDevice.Viewport.Height;
 
-        if ((currentKeyboardState.IsKeyDown(Keys.Up) || currentKeyboardState.IsKeyDown(Keys.W)) && _waterMoleculePosition.Y > 5)
+        // allows water molecule to move within the boundaries for that scene
+        if (
+            (currentKeyboardState.IsKeyDown(Keys.Up) || currentKeyboardState.IsKeyDown(Keys.W))
+            && _waterMoleculePosition.Y > 5
+        )
             _waterMoleculePosition.Y -= updatedWaterSpeed;
 
         if (
@@ -130,19 +123,34 @@ public class LevelOne : Level
 
         if (_currentScreenSequence.Equals(5))
         {
-            if ((currentKeyboardState.IsKeyDown(Keys.Left) || currentKeyboardState.IsKeyDown(Keys.A)) && _waterMoleculePosition.X > 320)
+            if (
+                (
+                    currentKeyboardState.IsKeyDown(Keys.Left)
+                    || currentKeyboardState.IsKeyDown(Keys.A)
+                )
+                && _waterMoleculePosition.X > 320
+            )
                 _waterMoleculePosition.X -= updatedWaterSpeed;
         }
         else
         {
-            if ((currentKeyboardState.IsKeyDown(Keys.Left) || currentKeyboardState.IsKeyDown(Keys.D)) && _waterMoleculePosition.X > 26)
+            if (
+                (
+                    currentKeyboardState.IsKeyDown(Keys.Left)
+                    || currentKeyboardState.IsKeyDown(Keys.D)
+                )
+                && _waterMoleculePosition.X > 26
+            )
                 _waterMoleculePosition.X -= updatedWaterSpeed;
         }
 
         if (_currentScreenSequence.Equals(5))
         {
             if (
-                (currentKeyboardState.IsKeyDown(Keys.Right) || currentKeyboardState.IsKeyDown(Keys.D))
+                (
+                    currentKeyboardState.IsKeyDown(Keys.Right)
+                    || currentKeyboardState.IsKeyDown(Keys.D)
+                )
                 && _waterMoleculePosition.X < screenWidth - 410
             )
                 _waterMoleculePosition.X += updatedWaterSpeed;
@@ -150,12 +158,16 @@ public class LevelOne : Level
         else
         {
             if (
-                (currentKeyboardState.IsKeyDown(Keys.Right) || currentKeyboardState.IsKeyDown(Keys.A))
+                (
+                    currentKeyboardState.IsKeyDown(Keys.Right)
+                    || currentKeyboardState.IsKeyDown(Keys.A)
+                )
                 && _waterMoleculePosition.X < screenWidth - 18
             )
                 _waterMoleculePosition.X += updatedWaterSpeed;
         }
 
+        // if you hit the location of any water molecules updates so you get stuck
         if (
             _currentScreenSequence == 5
             && _waterMoleculePosition.Y is > 425 and < 450
@@ -208,9 +220,9 @@ public class LevelOne : Level
         // complete moving up the capillary
         if (_currentScreenSequence.Equals(5) && _waterMoleculePosition.Y < 10)
         {
-            game.endCountDown();
+            game.EndCountDown();
             UpdateCurrentScreenSequence(6);
-            game.startFightMusic();
+            game.StartFightMusic();
         }
 
         // answer question
@@ -219,22 +231,30 @@ public class LevelOne : Level
             if (currentKeyboardState.IsKeyDown(Keys.A))
             {
                 UpdateCurrentScreenSequence(7);
-                game.stopFightMusic();
-                game.increaseKnowledge();
+                game.StopFightMusic();
+                game.IncreaseKnowledge();
             }
 
             if (currentKeyboardState.IsKeyDown(Keys.B) || currentKeyboardState.IsKeyDown(Keys.C))
                 game.ChangeState(new GameOverState(game));
         }
 
-        if (_currentScreenSequence.Equals(8)) game.PlayBackgroundMusic();
+        if (_currentScreenSequence.Equals(8))
+            game.PlayBackgroundMusic();
 
-        if (_currentScreenSequence == 5 || _currentScreenSequence == 6 || _currentScreenSequence == 7 ||
-            _currentScreenSequence == 8) game.toggleHealthKnowledge(true);
+        // makes sure health and knowledge bars are shown at relevant scenes
+        if (
+            _currentScreenSequence == 5
+            || _currentScreenSequence == 6
+            || _currentScreenSequence == 7
+            || _currentScreenSequence == 8
+        )
+            game.ToggleHealthKnowledge(true);
 
+        // starts the countdown
         if (_beatTheClock > 10 && _currentScreenSequence.Equals(5))
         {
-            game.ranOutOfTime();
+            game.RanOutOfTime();
             game.ChangeState(new GameOverState(game));
         }
     }
@@ -310,7 +330,7 @@ public class LevelOne : Level
                 WriteTextBox(spriteBatch, input2, _textBox);
 
                 break;
-            
+
             case 4:
                 game.GraphicsDevice.Clear(Color.Black);
                 spriteBatch.Draw(
@@ -319,61 +339,20 @@ public class LevelOne : Level
                     Color.White
                 );
 
-                WriteFontCentreSmaller(
-                    "HOW TO PLAY",
-                    0,
-                    -150,
-                    Color.White
-                );
-                
-                WriteFontCentreSmaller(
-                    "Use the arrow keys to ",
-                    -110,
-                    60,
-                    Color.White
-                );
-                WriteFontCentreSmaller(
-                    "move",
-                    -110,
-                    80,
-                    Color.White
-                );
-                
-                WriteFontCentreSmaller(
-                    "Reach the top of ",
-                    120,
-                    60,
-                    Color.White
-                );
-                WriteFontCentreSmaller(
-                    "the capillary as ",
-                    120,
-                    80,
-                    Color.White
-                );
-                WriteFontCentreSmaller(
-                    "fast as you can, ",
-                    120,
-                    100,
-                    Color.White
-                );
-                WriteFontCentreSmaller(
-                    "avoiding all other",
-                    120,
-                    120,
-                    Color.White
-                );
-                
-                WriteFontCentreSmaller(
-                    "molecules",
-                    120,
-                    140,
-                    Color.White
-                );
+                WriteFontCentreSmaller("HOW TO PLAY", 0, -150, Color.White);
+
+                WriteFontCentreSmaller("Use the arrow keys to ", -110, 60, Color.White);
+                WriteFontCentreSmaller("move", -110, 80, Color.White);
+
+                WriteFontCentreSmaller("Reach the top of ", 120, 60, Color.White);
+                WriteFontCentreSmaller("the capillary as ", 120, 80, Color.White);
+                WriteFontCentreSmaller("fast as you can, ", 120, 100, Color.White);
+                WriteFontCentreSmaller("avoiding all other", 120, 120, Color.White);
+
+                WriteFontCentreSmaller("molecules", 120, 140, Color.White);
 
                 break;
 
-            
             case 5:
                 game.GraphicsDevice.Clear(Color.Black);
                 spriteBatch.Draw(

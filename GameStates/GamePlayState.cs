@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Input;
 namespace gamificationHonoursProject.GameStates;
 
 /// <summary>
-/// Game Play Screen inherited state handles all logic for loading and updating the Title Screen
+/// Game Play Screen inherited state handles all logic for loading and updating the Game Play state
 /// </summary>
 public class GamePlayState : State
 {
@@ -14,6 +14,7 @@ public class GamePlayState : State
     public GamePlayState(Game1 game, int levelNumber)
         : base(game)
     {
+        // loads current level number, when you die switches back to current level instead of beginning
         switch (levelNumber)
         {
             case 0:
@@ -32,7 +33,7 @@ public class GamePlayState : State
                 currentLevel = new LevelFour(game);
                 break;
             default:
-                currentLevel = new LevelOne(game); // Default to LevelOne
+                currentLevel = new LevelOne(game);
                 break;
         }
     }

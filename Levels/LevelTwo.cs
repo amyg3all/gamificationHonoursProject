@@ -13,7 +13,6 @@ public class LevelTwo : Level
     private double _elapsedTime = 0;
     private double _sequenceTimer = 0;
     private double _beatTheClock = 0;
-    private int _currentScreenSequence = 0;
     private Texture2D _screenOne;
     private Texture2D _screenTwo;
     private Texture2D _screenTwoPointFive;
@@ -57,8 +56,8 @@ public class LevelTwo : Level
     private bool _hitCellNine = false;
     private bool _hitCellTen = false;
 
-    private bool increaseCellBatteryFirst = true;
-    private bool increaseCellBatterySecond = true;
+    private bool _increaseCellBatteryFirst = true;
+    private bool _increaseCellBatterySecond = true;
 
     public LevelTwo(Game1 game)
         : base(game)
@@ -73,6 +72,8 @@ public class LevelTwo : Level
         _hitCellEight = false;
         _hitCellNine = false;
         _hitCellTen = false;
+
+        _currentScreenSequence = 0;
     }
 
     public override void LoadContent()
@@ -114,12 +115,6 @@ public class LevelTwo : Level
         _electronSpeed = 250f;
     }
 
-    private void UpdateCurrentScreenSequence(int newScreenSequence)
-    {
-        if (newScreenSequence == _currentScreenSequence + 1)
-            _currentScreenSequence = newScreenSequence;
-    }
-
     public override void Update(GameTime gameTime)
     {
         _elapsedTime += gameTime.ElapsedGameTime.TotalSeconds;
@@ -131,7 +126,7 @@ public class LevelTwo : Level
 
         var currentKeyboardState = Keyboard.GetState();
 
-        // Check if Enter is pressed and not held down
+        // updates sequence if enter is pressed
         if (
             currentKeyboardState.IsKeyDown(Keys.Enter) && _previousKeyboardState.IsKeyUp(Keys.Enter)
         )
@@ -154,13 +149,13 @@ public class LevelTwo : Level
                     break;
                 case 10:
                     _beatTheClock = 0;
-                    game.startCountDown();
+                    game.StartCountDown();
                     UpdateCurrentScreenSequence(11);
                     break;
                 case 19:
                     _sequenceTimer = 0;
                     game.StopBackgroundMusic();
-                    game.startFightMusic();
+                    game.StartFightMusic();
                     UpdateCurrentScreenSequence(20);
                     break;
                 case 21:
@@ -176,22 +171,38 @@ public class LevelTwo : Level
         var screenWidth = game.GraphicsDevice.Viewport.Width;
         var screenHeight = game.GraphicsDevice.Viewport.Height;
 
+        // allows water to move within the boundaries of the scene
         if (_currentScreenSequence.Equals(5))
         {
-            if ((currentKeyboardState.IsKeyDown(Keys.Up) || currentKeyboardState.IsKeyDown(Keys.W)) && _waterMoleculePosition.Y > 256)
+            if (
+                (currentKeyboardState.IsKeyDown(Keys.Up) || currentKeyboardState.IsKeyDown(Keys.W))
+                && _waterMoleculePosition.Y > 256
+            )
                 _waterMoleculePosition.Y -= updatedWaterSpeed;
 
             if (
-                (currentKeyboardState.IsKeyDown(Keys.Down) || currentKeyboardState.IsKeyDown(Keys.S))
+                (
+                    currentKeyboardState.IsKeyDown(Keys.Down)
+                    || currentKeyboardState.IsKeyDown(Keys.S)
+                )
                 && _waterMoleculePosition.Y < screenHeight - 30
             )
                 _waterMoleculePosition.Y += updatedWaterSpeed;
 
-            if ((currentKeyboardState.IsKeyDown(Keys.Left) || currentKeyboardState.IsKeyDown(Keys.A)) && _waterMoleculePosition.X > 26)
+            if (
+                (
+                    currentKeyboardState.IsKeyDown(Keys.Left)
+                    || currentKeyboardState.IsKeyDown(Keys.A)
+                )
+                && _waterMoleculePosition.X > 26
+            )
                 _waterMoleculePosition.X -= updatedWaterSpeed;
 
             if (
-                (currentKeyboardState.IsKeyDown(Keys.Right) || currentKeyboardState.IsKeyDown(Keys.D))
+                (
+                    currentKeyboardState.IsKeyDown(Keys.Right)
+                    || currentKeyboardState.IsKeyDown(Keys.D)
+                )
                 && _waterMoleculePosition.X < screenWidth - 18
             )
                 _waterMoleculePosition.X += updatedWaterSpeed;
@@ -199,25 +210,41 @@ public class LevelTwo : Level
 
         if (_currentScreenSequence.Equals(11))
         {
-            if ((currentKeyboardState.IsKeyDown(Keys.Up) || currentKeyboardState.IsKeyDown(Keys.W)) && _waterMoleculePosition.Y > 15)
+            if (
+                (currentKeyboardState.IsKeyDown(Keys.Up) || currentKeyboardState.IsKeyDown(Keys.W))
+                && _waterMoleculePosition.Y > 15
+            )
                 _waterMoleculePosition.Y -= updatedElectronSpeed;
 
             if (
-                (currentKeyboardState.IsKeyDown(Keys.Down) || currentKeyboardState.IsKeyDown(Keys.S))
+                (
+                    currentKeyboardState.IsKeyDown(Keys.Down)
+                    || currentKeyboardState.IsKeyDown(Keys.S)
+                )
                 && _waterMoleculePosition.Y < screenHeight - 30
             )
                 _waterMoleculePosition.Y += updatedElectronSpeed;
 
-            if ((currentKeyboardState.IsKeyDown(Keys.Left) || currentKeyboardState.IsKeyDown(Keys.A)) && _waterMoleculePosition.X > 26)
+            if (
+                (
+                    currentKeyboardState.IsKeyDown(Keys.Left)
+                    || currentKeyboardState.IsKeyDown(Keys.A)
+                )
+                && _waterMoleculePosition.X > 26
+            )
                 _waterMoleculePosition.X -= updatedElectronSpeed;
 
             if (
-                (currentKeyboardState.IsKeyDown(Keys.Right) || currentKeyboardState.IsKeyDown(Keys.D))
+                (
+                    currentKeyboardState.IsKeyDown(Keys.Right)
+                    || currentKeyboardState.IsKeyDown(Keys.D)
+                )
                 && _waterMoleculePosition.X < screenWidth - 18
             )
                 _waterMoleculePosition.X += updatedElectronSpeed;
         }
 
+        // updates sequence if water molecule hits the PSII system
         if (
             _currentScreenSequence.Equals(5)
             && _waterMoleculePosition.Y < 291
@@ -229,6 +256,7 @@ public class LevelTwo : Level
             UpdateCurrentScreenSequence(6);
         }
 
+        // starts cut scene of BANG
         if (_currentScreenSequence.Equals(6) && _sequenceTimer > 0.7)
         {
             _sequenceTimer = 0;
@@ -246,44 +274,7 @@ public class LevelTwo : Level
             UpdateCurrentScreenSequence(9);
         }
 
-        if (_currentScreenSequence.Equals(12) && _sequenceTimer > 1)
-        {
-            _sequenceTimer = 0;
-            UpdateCurrentScreenSequence(13);
-        }
-        if (_currentScreenSequence.Equals(13) && _sequenceTimer > 1)
-        {
-            _sequenceTimer = 0;
-            UpdateCurrentScreenSequence(14);
-        }
-        if (_currentScreenSequence.Equals(14) && _sequenceTimer > 1)
-        {
-            _sequenceTimer = 0;
-            game.setBattery(1);
-            UpdateCurrentScreenSequence(15);
-        }
-        if (_currentScreenSequence.Equals(15) && _sequenceTimer > 1)
-        {
-            _sequenceTimer = 0;
-            UpdateCurrentScreenSequence(16);
-        }
-        if (_currentScreenSequence.Equals(16) && _sequenceTimer > 1)
-        {
-            _sequenceTimer = 0;
-            UpdateCurrentScreenSequence(17);
-        }
-        if (_currentScreenSequence.Equals(17) && _sequenceTimer > 1)
-        {
-            _sequenceTimer = 0;
-            game.setBattery(0);
-            UpdateCurrentScreenSequence(18);
-        }
-        if (_currentScreenSequence.Equals(18) && _sequenceTimer > 1)
-        {
-            _sequenceTimer = 0;
-            UpdateCurrentScreenSequence(19);
-        }
-
+        // lights up the cells if their position is hit
         if (
             _currentScreenSequence.Equals(11)
             && _hitCellOne
@@ -291,11 +282,11 @@ public class LevelTwo : Level
             && _hitCellThree
             && _hitCellFour
             && _hitCellFive
-            && increaseCellBatteryFirst
+            && _increaseCellBatteryFirst
         )
         {
-            increaseCellBatteryFirst = false;
-            game.increaseBattery();
+            _increaseCellBatteryFirst = false;
+            game.IncreaseBattery();
         }
         if (
             _currentScreenSequence.Equals(11)
@@ -304,11 +295,11 @@ public class LevelTwo : Level
             && _hitCellEight
             && _hitCellNine
             && _hitCellTen
-            && increaseCellBatterySecond
+            && _increaseCellBatterySecond
         )
         {
-            increaseCellBatterySecond = false;
-            game.increaseBattery();
+            _increaseCellBatterySecond = false;
+            game.IncreaseBattery();
         }
 
         if (_currentScreenSequence.Equals(11))
@@ -385,6 +376,45 @@ public class LevelTwo : Level
             }
         }
 
+        // starts cut scene of ATP being created
+        if (_currentScreenSequence.Equals(12) && _sequenceTimer > 1)
+        {
+            _sequenceTimer = 0;
+            UpdateCurrentScreenSequence(13);
+        }
+        if (_currentScreenSequence.Equals(13) && _sequenceTimer > 1)
+        {
+            _sequenceTimer = 0;
+            UpdateCurrentScreenSequence(14);
+        }
+        if (_currentScreenSequence.Equals(14) && _sequenceTimer > 1)
+        {
+            _sequenceTimer = 0;
+            game.SetBattery(1);
+            UpdateCurrentScreenSequence(15);
+        }
+        if (_currentScreenSequence.Equals(15) && _sequenceTimer > 1)
+        {
+            _sequenceTimer = 0;
+            UpdateCurrentScreenSequence(16);
+        }
+        if (_currentScreenSequence.Equals(16) && _sequenceTimer > 1)
+        {
+            _sequenceTimer = 0;
+            UpdateCurrentScreenSequence(17);
+        }
+        if (_currentScreenSequence.Equals(17) && _sequenceTimer > 1)
+        {
+            _sequenceTimer = 0;
+            game.SetBattery(0);
+            UpdateCurrentScreenSequence(18);
+        }
+        if (_currentScreenSequence.Equals(18) && _sequenceTimer > 1)
+        {
+            _sequenceTimer = 0;
+            UpdateCurrentScreenSequence(19);
+        }
+
         // make sure health, knowledge, and battery are displayed for relevant scenes
         if (
             _currentScreenSequence.Equals(5)
@@ -400,9 +430,9 @@ public class LevelTwo : Level
             || _currentScreenSequence.Equals(18)
             || _currentScreenSequence.Equals(19)
         )
-            game.toggleHealthKnowledge(true);
+            game.ToggleHealthKnowledge(true);
         else
-            game.toggleHealthKnowledge(false);
+            game.ToggleHealthKnowledge(false);
 
         if (
             _currentScreenSequence.Equals(9)
@@ -417,30 +447,33 @@ public class LevelTwo : Level
             || _currentScreenSequence.Equals(18)
             || _currentScreenSequence.Equals(19)
         )
-            game.toggleBattery(true);
+            game.ToggleBattery(true);
         else
-            game.toggleBattery(false);
+            game.ToggleBattery(false);
 
+        // starts the timer
         if (_beatTheClock > 10 && _currentScreenSequence.Equals(11))
         {
-            game.ranOutOfTime();
+            game.RanOutOfTime();
             game.ChangeState(new GameOverState(game));
         }
 
-        if (_currentScreenSequence.Equals(11) && game.getCurrentBattery() == 2)
+        // ends timer once they've lit up all the cells
+        if (_currentScreenSequence.Equals(11) && game.GetCurrentBattery() == 2)
         {
-            game.endCountDown();
+            game.EndCountDown();
             UpdateCurrentScreenSequence(12);
         }
 
+        // quiz question
         if (_currentScreenSequence.Equals(20))
         {
             if (currentKeyboardState.IsKeyDown(Keys.C))
             {
                 UpdateCurrentScreenSequence(21);
-                game.stopFightMusic();
+                game.StopFightMusic();
                 game.PlayBackgroundMusic();
-                game.increaseKnowledge();
+                game.IncreaseKnowledge();
             }
 
             if (currentKeyboardState.IsKeyDown(Keys.A) || currentKeyboardState.IsKeyDown(Keys.B))
@@ -785,7 +818,7 @@ public class LevelTwo : Level
                 );
 
                 WriteFontCentre("You Made ATP", 0, -100, Color.White);
-                WriteFontCentre(">press enter<", 0, -70, Color.White);
+                WriteFontCentreSmaller(">press enter<", 0, -70, Color.White);
 
                 break;
             case 20:
@@ -801,7 +834,7 @@ public class LevelTwo : Level
                     + "Well done on completing the light dependent reaction "
                     + "I hope you were paying attention as now it is quiz time! What membrane do the hydrogen ions "
                     + "have to be pumped across?";
-                
+
                 var ansA = "A) CHLOROPLAST MEMBRANE";
                 var ansB = "B) GRANUM MEMBRANE";
                 var ansC = "C) THYLAKOID MEMBRANE";

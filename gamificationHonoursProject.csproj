@@ -5,8 +5,6 @@
         <PublishReadyToRun>false</PublishReadyToRun>
         <TieredCompilation>false</TieredCompilation>
         <UseAppHost>true</UseAppHost>
-        <RuntimeIdentifier>browser-wasm</RuntimeIdentifier>
-        <PublishAot>false</PublishAot>
     </PropertyGroup>
 
     <PropertyGroup>

@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SpriteFontPlus;
@@ -15,6 +17,8 @@ public abstract class Level
 {
     private SpriteFont _pixelFont;
     protected Game1 game;
+    public int _currentScreenSequence;
+    private string _contentPath;
 
     protected Level(Game1 game)
     {
@@ -25,10 +29,14 @@ public abstract class Level
     public abstract void Update(GameTime gameTime);
     public abstract void Draw(SpriteBatch spriteBatch);
 
+    /// <summary>
+    /// bakes the font for all the subsequent level classes
+    /// </summary>
     public void BakeFont()
     {
-        var fontPath =
-            "/Users/amygeall/Documents/diss/gamificationHonoursProject/Content/Fonts/pixelFont.ttf";
+        var basePath = AppDomain.CurrentDomain.BaseDirectory; 
+        _contentPath = Path.Combine(basePath, "..","..", "..", "Content");
+        var fontPath = Path.Combine(_contentPath, "Fonts", "pixelFont.ttf");
         var fontBytes = File.ReadAllBytes(fontPath);
         var bakedFont = TtfFontBaker.Bake(
             fontBytes,
@@ -38,16 +46,6 @@ public abstract class Level
             new[] { CharacterRange.BasicLatin, CharacterRange.Latin1Supplement }
         );
         _pixelFont = bakedFont.CreateSpriteFont(game.GraphicsDevice);
-    }
-
-    public void WriteFont(string writeThis, int xPosition, int yPosition, Color colour)
-    {
-        game.SpriteBatch.DrawString(
-            _pixelFont,
-            writeThis,
-            new Vector2(xPosition, yPosition),
-            colour
-        );
     }
 
     public void WriteFontCentre(string writeThis, int adjustX, int adjustY, Color colour)
@@ -62,16 +60,17 @@ public abstract class Level
         game.SpriteBatch.DrawString(_pixelFont, writeThis, centrePosition, colour);
     }
 
+    // adjusts the font size
     public void WriteFontCentreSmaller(string writeThis, int adjustX, int adjustY, Color colour)
     {
         var screenWidth = game.GraphicsDevice.Viewport.Width;
         var screenHeight = game.GraphicsDevice.Viewport.Height;
         var stringWidth = _pixelFont.MeasureString(writeThis);
-        var stringHeight = _pixelFont.LineSpacing; // Get the height of the text
-        var scale = 0.5f; // Adjust as needed
+        var stringHeight = _pixelFont.LineSpacing;
+        var scale = 0.5f;
         var centrePosition = new Vector2(
-            (screenWidth - stringWidth.X * scale) / 2 + adjustX, // Center horizontally with scaling
-            (screenHeight - stringHeight * scale) / 2 + adjustY // Center vertically with scaling
+            (screenWidth - stringWidth.X * scale) / 2 + adjustX,
+            (screenHeight - stringHeight * scale) / 2 + adjustY
         );
 
         game.SpriteBatch.DrawString(
@@ -87,7 +86,7 @@ public abstract class Level
         );
     }
 
-    // the text can only be max 420 char long equal to six sentences of 70 chars
+    // writes a textbox formats so that the text can only be max 420 char long equal to six sentences of 70 chars
     public void WriteTextBox(SpriteBatch spriteBatch, string inputText, Texture2D textBox)
     {
         var screenWidth = game.GraphicsDevice.Viewport.Width;
@@ -104,7 +103,7 @@ public abstract class Level
 
         foreach (var word in words)
         {
-            // Check if adding the current word exceeds the max length
+            // Check to see if adding the current word exceeds the max length
             if (currentString.Length + word.Length + 1 > 69)
             {
                 // Add the current string to the result and start a new string
@@ -112,17 +111,17 @@ public abstract class Level
                 currentString = "";
             }
 
-            // Add the word to the current string
             currentString += word + " ";
         }
 
-        if (!string.IsNullOrWhiteSpace(currentString)) result.Add(currentString.Trim());
+        if (!string.IsNullOrWhiteSpace(currentString))
+            result.Add(currentString.Trim());
 
         var allSentences = result.Take(6).ToList();
 
-        // Draw the texture at the bottom center
         spriteBatch.Draw(textBox, new Rectangle(posX, posY, screenWidth, boxHeight), Color.White);
 
+        // renders the resulting sentences and adjusts them accordingly so that they're in the centre of the textbox
         switch (allSentences.Count)
         {
             case 1:
@@ -157,8 +156,16 @@ public abstract class Level
                 break;
         }
     }
-    
-    public void WriteTextBox(SpriteBatch spriteBatch, string question, string optionA, string optionB, string optionC, Texture2D textBox)
+
+    // writes the textbox for a fight scene so that each answer option is on a new line
+    public void WriteTextBox(
+        SpriteBatch spriteBatch,
+        string question,
+        string optionA,
+        string optionB,
+        string optionC,
+        Texture2D textBox
+    )
     {
         var screenWidth = game.GraphicsDevice.Viewport.Width;
         var screenHeight = game.GraphicsDevice.Viewport.Height;
@@ -168,7 +175,6 @@ public abstract class Level
         var posX = (screenWidth - boxWidth) / 2 - 40;
         var posY = screenHeight - boxHeight + 20;
 
-        // Split the question into multiple lines if needed
         var words = question.Split(' ').ToList();
         var result = new List<string>();
         var currentString = "";
@@ -183,12 +189,11 @@ public abstract class Level
             currentString += word + " ";
         }
 
-        if (!string.IsNullOrWhiteSpace(currentString)) 
+        if (!string.IsNullOrWhiteSpace(currentString))
             result.Add(currentString.Trim());
 
         var allSentences = result.Take(6).ToList();
 
-        // Draw the text box background
         spriteBatch.Draw(textBox, new Rectangle(posX, posY, screenWidth, boxHeight), Color.White);
 
         // Print the question (centered)
@@ -204,5 +209,11 @@ public abstract class Level
         WriteFontCentreSmaller(optionB, -75, initialPos + 20, Color.Black);
         WriteFontCentreSmaller(optionC, -75, initialPos + 40, Color.Black);
     }
-
+    
+    // updates the scene sequence
+    public void UpdateCurrentScreenSequence(int newScreenSequence)
+    {
+        if (newScreenSequence == _currentScreenSequence + 1)
+            _currentScreenSequence = newScreenSequence;
+    }
 }

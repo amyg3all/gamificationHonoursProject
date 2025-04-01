@@ -8,6 +8,8 @@ namespace gamificationHonoursProject;
 
 /// <summary>
 /// handles all main game logic and implementation
+/// Music by Eric Matyas
+/// www.soundimage.org
 /// </summary>
 public class Game1 : Game
 {
@@ -21,8 +23,8 @@ public class Game1 : Game
     private SoundEffect _fightMusic;
     private SoundEffectInstance _fightMusicInstance;
 
-    private bool displayHealthKnowledge = false;
-    private bool displayBattery = false;
+    private bool _displayHealthKnowledge = false;
+    private bool _displayBattery = false;
     private int _currentHealth = 4;
     private int _currentKnowledge = 0;
     private int _currentBattery = 0;
@@ -76,71 +78,68 @@ public class Game1 : Game
         ChangeState(new GamePlayState(this, _selectedLevel));
     }
 
-    public void startCountDown()
+    public void StartCountDown()
     {
         _startCountDown = true;
     }
-    public void startCountDown8()
+
+    public void StartCountDown8()
     {
         _startCountDown8 = true;
     }
 
-    public void endCountDown()
+    public void EndCountDown()
     {
         _endCountDown = true;
     }
-    
 
-    public int getCurrentBattery()
+    public int GetCurrentBattery()
     {
         return _currentBattery;
     }
 
-    public void increaseBattery()
+    public void IncreaseBattery()
     {
+        // not allowed to increase battery indefinitely
         if (_currentBattery < 2)
         {
             _currentBattery++;
         }
     }
-    
-    public void setBattery(int batteryPercentage)
+
+    public void SetBattery(int batteryPercentage)
     {
+        // required so that if you die you can reset the battery to zero
         _currentBattery = batteryPercentage;
     }
 
-    public int getCurrentHealth()
+    public int GetCurrentHealth()
     {
         return _currentHealth;
     }
 
-    public void decreaseHealth()
+    public void DecreaseHealth()
     {
+        // kills you if the health goes to zero
         if (_currentHealth != 1)
             _currentHealth--;
         else
             ChangeState(new GameOverState(this));
     }
 
-    public void increaseKnowledge()
+    public void IncreaseKnowledge()
     {
         _currentKnowledge++;
     }
 
-    public void toggleHealthKnowledge(bool trueOrFalse)
+    public void ToggleHealthKnowledge(bool trueOrFalse)
     {
-        if (trueOrFalse == true)
-            displayHealthKnowledge = true;
-        else
-            displayHealthKnowledge = false;
+        _displayHealthKnowledge = trueOrFalse;
     }
-    
-    public void toggleBattery(bool trueOrFalse)
+
+    public void ToggleBattery(bool trueOrFalse)
     {
-        if (trueOrFalse)
-            displayBattery = true;
-        else
-            displayBattery = false;
+        _displayBattery = trueOrFalse;
     }
 
     public void ChangeState(State newState)
@@ -148,20 +147,56 @@ public class Game1 : Game
         _currentState = newState;
         _currentState.LoadContent();
     }
-    
-    public void ranOutOfTime()
+
+    public void RanOutOfTime()
     {
         _ranOutOfTime = true;
     }
-    
-    public void unsetRanOutOfTime()
+
+    public void UnsetRanOutOfTime()
     {
         _ranOutOfTime = false;
     }
 
-    public bool getRanOutOfTime()
+    public bool GetRanOutOfTime()
     {
         return _ranOutOfTime;
+    }
+
+    public void PlayBackgroundMusic()
+    {
+        if (
+            _backgroundMusicInstance != null
+            && _backgroundMusicInstance.State != SoundState.Playing
+        )
+            _backgroundMusicInstance.Play();
+    }
+
+    public void StartFightMusic()
+    {
+        if (
+            _backgroundMusicInstance is { State: SoundState.Playing }
+        )
+            _backgroundMusicInstance.Stop();
+        if (_fightMusicInstance != null && _fightMusicInstance.State != SoundState.Playing)
+            _fightMusicInstance.Play();
+    }
+
+    public void StopFightMusic()
+    {
+        if (_fightMusicInstance is { State: SoundState.Playing })
+            _fightMusicInstance.Stop();
+        if (
+            _backgroundMusicInstance != null
+            && _backgroundMusicInstance.State != SoundState.Playing
+        )
+            _backgroundMusicInstance.Play();
+    }
+
+    public void StopBackgroundMusic()
+    {
+        if (_backgroundMusicInstance is { State: SoundState.Playing })
+            _backgroundMusicInstance.Stop();
     }
 
     protected override void Initialize()
@@ -196,7 +231,7 @@ public class Game1 : Game
         _emptyBattery = Content.Load<Texture2D>("Objects/emptyBattery");
         _halfBattery = Content.Load<Texture2D>("Objects/halfBattery");
         _fullBattery = Content.Load<Texture2D>("Objects/fullBattery");
-        
+
         _countDownOne = Content.Load<Texture2D>("Objects/one");
         _countDownTwo = Content.Load<Texture2D>("Objects/two");
         _countDownThree = Content.Load<Texture2D>("Objects/three");
@@ -209,61 +244,29 @@ public class Game1 : Game
         _countDownTen = Content.Load<Texture2D>("Objects/ten");
     }
 
-    public void PlayBackgroundMusic()
-    {
-        if (
-            _backgroundMusicInstance != null
-            && _backgroundMusicInstance.State != SoundState.Playing
-        )
-            _backgroundMusicInstance.Play();
-    }
-
-    public void startFightMusic()
-    {
-        if (
-            _backgroundMusicInstance != null
-            && _backgroundMusicInstance.State == SoundState.Playing
-        )
-            _backgroundMusicInstance.Stop();
-        if (_fightMusicInstance != null && _fightMusicInstance.State != SoundState.Playing) _fightMusicInstance.Play();
-    }
-
-    public void stopFightMusic()
-    {
-        if (_fightMusicInstance != null && _fightMusicInstance.State == SoundState.Playing) _fightMusicInstance.Stop();
-        if (
-            _backgroundMusicInstance != null
-            && _backgroundMusicInstance.State != SoundState.Playing
-        )
-            _backgroundMusicInstance.Play();
-    }
-
-    public void StopBackgroundMusic()
-    {
-        if (
-            _backgroundMusicInstance != null
-            && _backgroundMusicInstance.State == SoundState.Playing
-        )
-            _backgroundMusicInstance.Stop();
-    }
-
     protected override void Update(GameTime gameTime)
     {
         _countDown -= gameTime.ElapsedGameTime.TotalSeconds;
+
+        // starts a countdown of 10 seconds
         if (_startCountDown)
         {
             _countDown = 10;
             _startCountDown = false;
             _endCountDown = false;
         }
+
+        // starts a countdown of 8 seconds
         if (_startCountDown8)
         {
             _countDown = 8;
             _startCountDown8 = false;
             _endCountDown = false;
         }
-        
+
         _currentState.Update(gameTime);
+
+        // quits the game if the user presses escape
         if (
             GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed
             || Keyboard.GetState().IsKeyDown(Keys.Escape)
@@ -279,7 +282,9 @@ public class Game1 : Game
         _currentState.Draw(gameTime);
 
         _spriteBatch.Begin();
-        if (displayHealthKnowledge)
+
+        // draws the current knowledge and health bars according to their current fullness
+        if (_displayHealthKnowledge)
         {
             switch (_currentKnowledge)
             {
@@ -298,7 +303,7 @@ public class Game1 : Game
                 case 4:
                     _spriteBatch.Draw(_fullKnowledge, Vector2.Zero, Color.White);
                     break;
-                default: 
+                default:
                     _spriteBatch.Draw(_fullKnowledge, Vector2.Zero, Color.White);
                     break;
             }
@@ -321,11 +326,10 @@ public class Game1 : Game
                     _spriteBatch.Draw(_fullHealth, Vector2.Zero, Color.White);
                     break;
             }
-            
-            
         }
-        
-        if (displayBattery)
+
+        // displays the battery according to current charge
+        if (_displayBattery)
         {
             switch (_currentBattery)
             {
@@ -341,53 +345,55 @@ public class Game1 : Game
             }
         }
 
+        // starts drawing the countdown in relation to the beat the clock timer in each level
         if (!_endCountDown)
         {
-            if (_countDown is < 10 and > 9)
+            switch (_countDown)
             {
-                _spriteBatch.Draw(_countDownTen, Vector2.Zero, Color.White);
+                case < 10
+                and > 9:
+                    _spriteBatch.Draw(_countDownTen, Vector2.Zero, Color.White);
+                    break;
+                case < 9
+                and > 8:
+                    _spriteBatch.Draw(_countDownNine, Vector2.Zero, Color.White);
+                    break;
+                case < 8
+                and > 7:
+                    _spriteBatch.Draw(_countDownEight, Vector2.Zero, Color.White);
+                    break;
+                case < 7
+                and > 6:
+                    _spriteBatch.Draw(_countDownSeven, Vector2.Zero, Color.White);
+                    break;
+                case < 6
+                and > 5:
+                    _spriteBatch.Draw(_countDownSix, Vector2.Zero, Color.White);
+                    break;
+                case < 5
+                and > 4:
+                    _spriteBatch.Draw(_countDownFive, Vector2.Zero, Color.White);
+                    break;
+                case < 4
+                and > 3:
+                    _spriteBatch.Draw(_countDownFour, Vector2.Zero, Color.White);
+                    break;
+                case < 3
+                and > 2:
+                    _spriteBatch.Draw(_countDownThree, Vector2.Zero, Color.White);
+                    break;
+                case < 2
+                and > 1:
+                    _spriteBatch.Draw(_countDownTwo, Vector2.Zero, Color.White);
+                    break;
+                case < 1
+                and > 0:
+                    _spriteBatch.Draw(_countDownOne, Vector2.Zero, Color.White);
+                    break;
+                case 0:
+                    _endCountDown = true;
+                    break;
             }
-            if (_countDown is < 9 and > 8)
-            {
-                _spriteBatch.Draw(_countDownNine, Vector2.Zero, Color.White);
-            }
-            if (_countDown is < 8 and > 7)
-            {
-                _spriteBatch.Draw(_countDownEight, Vector2.Zero, Color.White);
-            }
-            if (_countDown is < 7 and > 6)
-            {
-                _spriteBatch.Draw(_countDownSeven, Vector2.Zero, Color.White);
-            }
-            if (_countDown is < 6 and > 5)
-            {
-                _spriteBatch.Draw(_countDownSix, Vector2.Zero, Color.White);
-            }
-            if (_countDown is < 5 and > 4)
-            {
-                _spriteBatch.Draw(_countDownFive, Vector2.Zero, Color.White);
-            }
-            if (_countDown is < 4 and > 3)
-            {
-                _spriteBatch.Draw(_countDownFour, Vector2.Zero, Color.White);
-            }
-            if (_countDown is < 3 and > 2)
-            {
-                _spriteBatch.Draw(_countDownThree, Vector2.Zero, Color.White);
-            }
-            if (_countDown is < 2 and > 1)
-            {
-                _spriteBatch.Draw(_countDownTwo, Vector2.Zero, Color.White);
-            }
-            if (_countDown is < 1 and > 0)
-            {
-                _spriteBatch.Draw(_countDownOne, Vector2.Zero, Color.White);
-            }
-            if (_countDown == 0)
-            {
-                _endCountDown = true;
-            }
-                
         }
 
         _spriteBatch.End();

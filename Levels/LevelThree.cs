@@ -12,7 +12,6 @@ public class LevelThree : Level
 {
     private double _elapsedTime = 0;
     private double _beatTheClock = 0;
-    private int _currentScreenSequence = 0;
     private Texture2D _screenOne;
     private Texture2D _screenTwo;
     private Texture2D _screenTwoPointFive;
@@ -28,9 +27,12 @@ public class LevelThree : Level
     private Vector2 _electronPosition;
     private float _electronSpeed;
     private Vector2 _calvinPosition;
-    
+
     public LevelThree(Game1 game)
-        : base(game) { }
+        : base(game)
+    {
+        _currentScreenSequence = 0;
+    }
 
     public override void LoadContent()
     {
@@ -52,17 +54,11 @@ public class LevelThree : Level
             game._graphics.PreferredBackBufferHeight / 2
         );
         _electronSpeed = 250f;
-        
+
         _calvinPosition = new Vector2(
             game._graphics.PreferredBackBufferWidth / 2,
             game._graphics.PreferredBackBufferHeight / 2
         );
-    }
-
-    private void UpdateCurrentScreenSequence(int newScreenSequence)
-    {
-        if (newScreenSequence == _currentScreenSequence + 1)
-            _currentScreenSequence = newScreenSequence;
     }
 
     public override void Update(GameTime gameTime)
@@ -75,7 +71,7 @@ public class LevelThree : Level
 
         var currentKeyboardState = Keyboard.GetState();
 
-        // Check if Enter is pressed and not held down
+        // updates sequence when enter is pressed
         if (
             currentKeyboardState.IsKeyDown(Keys.Enter) && _previousKeyboardState.IsKeyUp(Keys.Enter)
         )
@@ -89,13 +85,12 @@ public class LevelThree : Level
                     break;
                 case 3:
                     _beatTheClock = 0;
-                    game.startCountDown8();
+                    game.StartCountDown8();
                     UpdateCurrentScreenSequence(4);
                     break;
                 case 9:
                     UpdateCurrentScreenSequence(10);
                     break;
-                
             }
 
         _previousKeyboardState = currentKeyboardState;
@@ -105,43 +100,65 @@ public class LevelThree : Level
         var screenWidth = game.GraphicsDevice.Viewport.Width;
         var screenHeight = game.GraphicsDevice.Viewport.Height;
 
-        if (_currentScreenSequence.Equals(4) || _currentScreenSequence.Equals(5) || _currentScreenSequence.Equals(6) || _currentScreenSequence.Equals(7) || _currentScreenSequence.Equals(8))
+        // allows electron to move
+        if (
+            _currentScreenSequence.Equals(4)
+            || _currentScreenSequence.Equals(5)
+            || _currentScreenSequence.Equals(6)
+            || _currentScreenSequence.Equals(7)
+            || _currentScreenSequence.Equals(8)
+        )
         {
-            if ((currentKeyboardState.IsKeyDown(Keys.Up) || currentKeyboardState.IsKeyDown(Keys.W))&& _electronPosition.Y > 15)
+            if (
+                (currentKeyboardState.IsKeyDown(Keys.Up) || currentKeyboardState.IsKeyDown(Keys.W))
+                && _electronPosition.Y > 15
+            )
                 _electronPosition.Y -= updatedElectronSpeed;
 
             if (
-                (currentKeyboardState.IsKeyDown(Keys.Down) || currentKeyboardState.IsKeyDown(Keys.S))
+                (
+                    currentKeyboardState.IsKeyDown(Keys.Down)
+                    || currentKeyboardState.IsKeyDown(Keys.S)
+                )
                 && _electronPosition.Y < screenHeight - 30
             )
                 _electronPosition.Y += updatedElectronSpeed;
 
-            if ((currentKeyboardState.IsKeyDown(Keys.Left) || currentKeyboardState.IsKeyDown(Keys.A)) && _electronPosition.X > 26)
+            if (
+                (
+                    currentKeyboardState.IsKeyDown(Keys.Left)
+                    || currentKeyboardState.IsKeyDown(Keys.A)
+                )
+                && _electronPosition.X > 26
+            )
                 _electronPosition.X -= updatedElectronSpeed;
 
             if (
-                (currentKeyboardState.IsKeyDown(Keys.Right) || currentKeyboardState.IsKeyDown(Keys.D))
+                (
+                    currentKeyboardState.IsKeyDown(Keys.Right)
+                    || currentKeyboardState.IsKeyDown(Keys.D)
+                )
                 && _electronPosition.X < screenWidth - 18
             )
                 _electronPosition.X += updatedElectronSpeed;
         }
 
+        // changes sequence when electron hits each product
         if (_currentScreenSequence.Equals(4))
         {
-            if (
-                _electronPosition.X is > 733 and < 758
-                && _electronPosition.Y is > 191 and < 212
-            )
+            if (_electronPosition.X is > 733 and < 758 && _electronPosition.Y is > 191 and < 212)
             {
                 UpdateCurrentScreenSequence(5);
             }
         }
-        
+
         if (_currentScreenSequence.Equals(5))
         {
-            if ((_electronPosition.X is > 712 and < 745
-                 && _electronPosition.Y is > 324 and < 349) || (_electronPosition.X is > 520 and < 558
-                                                                && _electronPosition.Y is > 395 and < 424)
+            if (
+                (_electronPosition.X is > 712 and < 745 && _electronPosition.Y is > 324 and < 349)
+                || (
+                    _electronPosition.X is > 520 and < 558 && _electronPosition.Y is > 395 and < 424
+                )
             )
             {
                 UpdateCurrentScreenSequence(6);
@@ -149,37 +166,34 @@ public class LevelThree : Level
         }
         if (_currentScreenSequence.Equals(6))
         {
-            if (
-                _electronPosition.X is > 329 and < 362
-                && _electronPosition.Y is > 412 and < 433
-            )
+            if (_electronPosition.X is > 329 and < 362 && _electronPosition.Y is > 412 and < 433)
             {
                 UpdateCurrentScreenSequence(7);
             }
         }
-        
+
         if (_currentScreenSequence.Equals(7))
         {
             if (
-                (_electronPosition.X is > 24 and < 45
-                 && _electronPosition.Y is > 254 and < 279) || (_electronPosition.X is > 275 and < 300
-                                                                && _electronPosition.Y is > 133 and < 162)
+                (_electronPosition.X is > 24 and < 45 && _electronPosition.Y is > 254 and < 279)
+                || (
+                    _electronPosition.X is > 275 and < 300 && _electronPosition.Y is > 133 and < 162
+                )
             )
             {
                 UpdateCurrentScreenSequence(8);
             }
         }
-        
+
         if (_currentScreenSequence.Equals(8))
         {
             if (
-                (_electronPosition.X is > 291 and < 325
-                 && _electronPosition.Y is > 87 and < 116) || (_electronPosition.X is > 558 and < 583
-                                                                && _electronPosition.Y is > 62 and < 83)
+                (_electronPosition.X is > 291 and < 325 && _electronPosition.Y is > 87 and < 116)
+                || (_electronPosition.X is > 558 and < 583 && _electronPosition.Y is > 62 and < 83)
             )
             {
                 UpdateCurrentScreenSequence(9);
-                game.endCountDown();
+                game.EndCountDown();
             }
         }
 
@@ -191,34 +205,44 @@ public class LevelThree : Level
             || _currentScreenSequence.Equals(7)
             || _currentScreenSequence.Equals(8)
         )
-            game.toggleHealthKnowledge(true);
+            game.ToggleHealthKnowledge(true);
         else
-            game.toggleHealthKnowledge(false);
-        
-        if (_beatTheClock > 8 && (_currentScreenSequence.Equals(4) || _currentScreenSequence.Equals(5) || _currentScreenSequence.Equals(6) || _currentScreenSequence.Equals(7) || _currentScreenSequence.Equals(8)))
+            game.ToggleHealthKnowledge(false);
+
+        // starts the countdown
+        if (
+            _beatTheClock > 8
+            && (
+                _currentScreenSequence.Equals(4)
+                || _currentScreenSequence.Equals(5)
+                || _currentScreenSequence.Equals(6)
+                || _currentScreenSequence.Equals(7)
+                || _currentScreenSequence.Equals(8)
+            )
+        )
         {
-            game.ranOutOfTime();
+            game.RanOutOfTime();
             game.ChangeState(new GameOverState(game));
+        }
+
+        if (_currentScreenSequence.Equals(10))
+        {
+            game.StartFightMusic();
+            if (currentKeyboardState.IsKeyDown(Keys.A))
+            {
+                UpdateCurrentScreenSequence(11);
+                game.StopFightMusic();
+                game.PlayBackgroundMusic();
+                game.IncreaseKnowledge();
+            }
+
+            if (currentKeyboardState.IsKeyDown(Keys.B) || currentKeyboardState.IsKeyDown(Keys.C))
+                game.ChangeState(new GameOverState(game));
         }
 
         if (_currentScreenSequence.Equals(11))
         {
             game.ChangeLevel();
-        }
-        
-        if (_currentScreenSequence.Equals(10))
-        {
-            game.startFightMusic();
-            if (currentKeyboardState.IsKeyDown(Keys.A))
-            {
-                UpdateCurrentScreenSequence(11);
-                game.stopFightMusic();
-                game.PlayBackgroundMusic();
-                game.increaseKnowledge();
-            }
-
-            if (currentKeyboardState.IsKeyDown(Keys.B) || currentKeyboardState.IsKeyDown(Keys.C))
-                game.ChangeState(new GameOverState(game));
         }
     }
 
@@ -286,7 +310,7 @@ public class LevelThree : Level
                     new Rectangle(0, 0, screenWidth, screenHeight),
                     Color.White
                 );
-                
+
                 WriteFontCentreSmaller("HOW TO PLAY", 0, -150, Color.White);
 
                 WriteFontCentreSmaller("catch the substrates", -110, 0, Color.White);
@@ -318,7 +342,7 @@ public class LevelThree : Level
                     SpriteEffects.None,
                     0f
                 );
-                
+
                 spriteBatch.Draw(
                     _calvinOne,
                     _calvinPosition,
@@ -350,7 +374,7 @@ public class LevelThree : Level
                     SpriteEffects.None,
                     0f
                 );
-                
+
                 spriteBatch.Draw(
                     _calvinTwo,
                     _calvinPosition,
@@ -382,7 +406,7 @@ public class LevelThree : Level
                     SpriteEffects.None,
                     0f
                 );
-                
+
                 spriteBatch.Draw(
                     _calvinThree,
                     _calvinPosition,
@@ -414,7 +438,7 @@ public class LevelThree : Level
                     SpriteEffects.None,
                     0f
                 );
-                
+
                 spriteBatch.Draw(
                     _calvinFour,
                     _calvinPosition,
@@ -446,7 +470,7 @@ public class LevelThree : Level
                     SpriteEffects.None,
                     0f
                 );
-                
+
                 spriteBatch.Draw(
                     _calvinFive,
                     _calvinPosition,
@@ -483,8 +507,7 @@ public class LevelThree : Level
                     Color.White
                 );
 
-                var input4 =
-                    "What are the main substrates of the Calvin cycle?";
+                var input4 = "What are the main substrates of the Calvin cycle?";
 
                 var ansA = "A) ATP AND CO2";
                 var ansB = "B) LIGHT";

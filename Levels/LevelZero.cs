@@ -12,7 +12,6 @@ namespace gamificationHonoursProject.Levels;
 public class LevelZero : Level
 {
     private double _elapsedTime = 0;
-    private int _currentScreenSequence = 0;
     private Texture2D _screenOne;
     private Texture2D _textBox;
     private KeyboardState _previousKeyboardState;
@@ -20,6 +19,7 @@ public class LevelZero : Level
     public LevelZero(Game1 game)
         : base(game)
     {
+        _currentScreenSequence = 0;
     }
 
     public override void LoadContent()
@@ -29,23 +29,18 @@ public class LevelZero : Level
         _textBox = game.Content.Load<Texture2D>("Other/pixelTextBox");
     }
 
-    private void UpdateCurrentScreenSequence(int newScreenSequence)
-    {
-        if (newScreenSequence == _currentScreenSequence + 1)
-        {
-            _currentScreenSequence = newScreenSequence;
-        }
-    }
-    
     public override void Update(GameTime gameTime)
     {
         _elapsedTime += gameTime.ElapsedGameTime.TotalSeconds;
 
-        if (_elapsedTime > 2) UpdateCurrentScreenSequence(1);
-        if(_elapsedTime > 4) UpdateCurrentScreenSequence(2);
+        if (_elapsedTime > 2)
+            UpdateCurrentScreenSequence(1);
+        if (_elapsedTime > 4)
+            UpdateCurrentScreenSequence(2);
 
         var currentKeyboardState = Keyboard.GetState();
-        
+
+        // updates scene if enter is pressed
         if (
             currentKeyboardState.IsKeyDown(Keys.Enter)
             && _previousKeyboardState.IsKeyUp(Keys.Enter)
@@ -54,19 +49,16 @@ public class LevelZero : Level
         {
             UpdateCurrentScreenSequence(3);
         }
-        
+
         if (
             currentKeyboardState.IsKeyDown(Keys.Enter)
             && _previousKeyboardState.IsKeyUp(Keys.Enter)
             && _currentScreenSequence == 3
         )
         {
-            game.toggleHealthKnowledge(false);
+            game.ToggleHealthKnowledge(false);
             game.ChangeLevel();
         }
-
-
-
     }
 
     public override void Draw(SpriteBatch spriteBatch)
@@ -81,7 +73,8 @@ public class LevelZero : Level
             case 0:
                 WriteFontCentre("HELLO PLAYER", 0, 0, Color.White);
                 break;
-            case 1: WriteFontCentre("WELCOME TO OXYGEN ODYSSEY", 0, 0, Color.White);
+            case 1:
+                WriteFontCentre("WELCOME TO OXYGEN ODYSSEY", 0, 0, Color.White);
                 break;
             case 2:
                 game.GraphicsDevice.Clear(Color.Black);
@@ -96,7 +89,7 @@ public class LevelZero : Level
                     + " you see that tree over there, business has been "
                     + "a bit slow and I'm worried all of our stocks are running low "
                     + " could you possibly go and make sure everything is working as normal? "
-                    + "Make sure you are speedy though, I'm going to have to time you as I need to" 
+                    + "Make sure you are speedy though, I'm going to have to time you as I need to"
                     + " make sure everything's in before the "
                     + "boss gets back";
 
@@ -113,7 +106,7 @@ public class LevelZero : Level
 
                 var input2 =
                     "are you up to the challenge? Oh I forgot to say, there is the service entrance down there by the roots"
-                    + " might be best to start there and get all the reactions going, we need to complete" 
+                    + " might be best to start there and get all the reactions going, we need to complete"
                     + " the photosynthesis before it gets dark, I'll make sure some of my buddies look out for you!";
 
                 WriteTextBox(spriteBatch, input2, _textBox);

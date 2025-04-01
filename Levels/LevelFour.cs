@@ -12,15 +12,17 @@ public class LevelFour : Level
 {
     private double _elapsedTime = 0;
     private double _sequenceTimer = 0;
-    private int _currentScreenSequence = 0;
     private Texture2D _screenOne;
     private Texture2D _screenTwo;
     private Texture2D _textBox;
     private Texture2D _fightTextBox;
     private KeyboardState _previousKeyboardState;
-    
+
     public LevelFour(Game1 game)
-        : base(game) { }
+        : base(game)
+    {
+        _currentScreenSequence = 0;
+    }
 
     public override void LoadContent()
     {
@@ -31,24 +33,17 @@ public class LevelFour : Level
         _fightTextBox = game.Content.Load<Texture2D>("Other/fightTextBox");
     }
 
-    private void UpdateCurrentScreenSequence(int newScreenSequence)
-    {
-        if (newScreenSequence == _currentScreenSequence + 1)
-            _currentScreenSequence = newScreenSequence;
-    }
-
     public override void Update(GameTime gameTime)
     {
         _elapsedTime += gameTime.ElapsedGameTime.TotalSeconds;
         _sequenceTimer += gameTime.ElapsedGameTime.TotalSeconds;
-
 
         if (_elapsedTime > 3)
             UpdateCurrentScreenSequence(1);
 
         var currentKeyboardState = Keyboard.GetState();
 
-        // Check if Enter is pressed and not held down
+        // updates the sequence if enter is pressed
         if (
             currentKeyboardState.IsKeyDown(Keys.Enter) && _previousKeyboardState.IsKeyUp(Keys.Enter)
         )
@@ -64,21 +59,21 @@ public class LevelFour : Level
                     _sequenceTimer = 0;
                     UpdateCurrentScreenSequence(8);
                     break;
-                
             }
-        
+
         _previousKeyboardState = currentKeyboardState;
-        
+
+        // starts quiz question 
         if (_currentScreenSequence.Equals(3))
         {
-            game.startFightMusic();
+            game.StartFightMusic();
             if (currentKeyboardState.IsKeyDown(Keys.B))
             {
                 _previousKeyboardState = currentKeyboardState;
                 UpdateCurrentScreenSequence(4);
-                game.stopFightMusic();
+                game.StopFightMusic();
                 game.PlayBackgroundMusic();
-                game.increaseKnowledge();
+                game.IncreaseKnowledge();
             }
 
             if (currentKeyboardState.IsKeyDown(Keys.A) || currentKeyboardState.IsKeyDown(Keys.C))
@@ -86,60 +81,79 @@ public class LevelFour : Level
                 game.ChangeState(new GameOverState(game));
             }
         }
+        
         if (_currentScreenSequence.Equals(4))
         {
-            game.startFightMusic();
+            game.StartFightMusic();
             if (currentKeyboardState.IsKeyDown(Keys.C))
             {
                 _previousKeyboardState = currentKeyboardState;
                 UpdateCurrentScreenSequence(5);
-                game.stopFightMusic();
+                game.StopFightMusic();
                 game.PlayBackgroundMusic();
-                game.increaseKnowledge();
+                game.IncreaseKnowledge();
             }
 
-            if (currentKeyboardState.IsKeyDown(Keys.A) || (currentKeyboardState.IsKeyDown(Keys.B) && !_previousKeyboardState.IsKeyDown(Keys.B)))
+            if (
+                currentKeyboardState.IsKeyDown(Keys.A)
+                || (
+                    currentKeyboardState.IsKeyDown(Keys.B)
+                    && !_previousKeyboardState.IsKeyDown(Keys.B)
+                )
+            )
             {
                 game.ChangeState(new GameOverState(game));
             }
-                
         }
+        
         if (_currentScreenSequence.Equals(5))
         {
-            game.startFightMusic();
+            game.StartFightMusic();
             if (currentKeyboardState.IsKeyDown(Keys.B))
             {
                 _previousKeyboardState = currentKeyboardState;
                 UpdateCurrentScreenSequence(6);
-                game.stopFightMusic();
+                game.StopFightMusic();
                 game.PlayBackgroundMusic();
-                game.increaseKnowledge();
+                game.IncreaseKnowledge();
             }
 
-            if (currentKeyboardState.IsKeyDown(Keys.A) || (currentKeyboardState.IsKeyDown(Keys.C) && !_previousKeyboardState.IsKeyDown(Keys.C)))
-            {
-                 game.ChangeState(new GameOverState(game));
-            }
-               
-        }
-        if (_currentScreenSequence.Equals(6))
-        {
-            game.startFightMusic();
-            if (currentKeyboardState.IsKeyDown(Keys.A))
-            {
-                UpdateCurrentScreenSequence(7);
-                game.stopFightMusic();
-                game.PlayBackgroundMusic();
-                game.increaseKnowledge();
-            }
-
-            if (currentKeyboardState.IsKeyDown(Keys.C) || (currentKeyboardState.IsKeyDown(Keys.B) && !_previousKeyboardState.IsKeyDown(Keys.B)))
+            if (
+                currentKeyboardState.IsKeyDown(Keys.A)
+                || (
+                    currentKeyboardState.IsKeyDown(Keys.C)
+                    && !_previousKeyboardState.IsKeyDown(Keys.C)
+                )
+            )
             {
                 game.ChangeState(new GameOverState(game));
             }
-                
         }
         
+        if (_currentScreenSequence.Equals(6))
+        {
+            game.StartFightMusic();
+            if (currentKeyboardState.IsKeyDown(Keys.A))
+            {
+                UpdateCurrentScreenSequence(7);
+                game.StopFightMusic();
+                game.PlayBackgroundMusic();
+                game.IncreaseKnowledge();
+            }
+
+            if (
+                currentKeyboardState.IsKeyDown(Keys.C)
+                || (
+                    currentKeyboardState.IsKeyDown(Keys.B)
+                    && !_previousKeyboardState.IsKeyDown(Keys.B)
+                )
+            )
+            {
+                game.ChangeState(new GameOverState(game));
+            }
+        }
+
+        // starts transition of cut scene
         if (_currentScreenSequence.Equals(8) && _sequenceTimer > 1)
         {
             _sequenceTimer = 0;
@@ -162,6 +176,11 @@ public class LevelFour : Level
         }
         if (_currentScreenSequence.Equals(12) && _sequenceTimer > 2)
         {
+            _sequenceTimer = 0;
+            UpdateCurrentScreenSequence(13);
+        }
+        if (_currentScreenSequence.Equals(13) && _sequenceTimer > 2)
+        {
             game.Exit();
         }
 
@@ -172,9 +191,9 @@ public class LevelFour : Level
             || _currentScreenSequence.Equals(5)
             || _currentScreenSequence.Equals(6)
         )
-            game.toggleHealthKnowledge(true);
+            game.ToggleHealthKnowledge(true);
         else
-            game.toggleHealthKnowledge(false);
+            game.ToggleHealthKnowledge(false);
     }
 
     public override void Draw(SpriteBatch spriteBatch)
@@ -184,6 +203,8 @@ public class LevelFour : Level
 
         game.GraphicsDevice.Clear(Color.Black);
         spriteBatch.Begin();
+        
+        // controls what is drawn for each scene
         switch (_currentScreenSequence)
         {
             case 0:
@@ -230,8 +251,7 @@ public class LevelFour : Level
                     Color.White
                 );
 
-                var input1 =
-                    "What were the main products of the light dependent reaction?";
+                var input1 = "What were the main products of the light dependent reaction?";
 
                 var ansA = "A) Water and Carbon dioxide";
                 var ansB = "B) ATP and Oxygen";
@@ -247,8 +267,7 @@ public class LevelFour : Level
                     Color.White
                 );
 
-                var input2 =
-                    "What is the main purpose of PSII?";
+                var input2 = "What is the main purpose of PSII?";
 
                 ansA = "A) To produce NADPH for the Calvin cycle";
                 ansB = "B) To fix carbon into organic molecules";
@@ -264,8 +283,7 @@ public class LevelFour : Level
                     Color.White
                 );
 
-                var input3 =
-                    "What is the main purpose of the Calvin cycle?";
+                var input3 = "What is the main purpose of the Calvin cycle?";
 
                 ansA = "A) To generate ATP from light energy";
                 ansB = "B) To produce glucose using carbon dioxide";
@@ -312,7 +330,7 @@ public class LevelFour : Level
                     new Rectangle(0, 0, screenWidth, screenHeight),
                     Color.White
                 );
-                
+
                 break;
             case 9:
                 game.GraphicsDevice.Clear(Color.Black);
@@ -321,7 +339,7 @@ public class LevelFour : Level
                     new Rectangle(0, 0, screenWidth, screenHeight),
                     Color.White
                 );
-                
+
                 break;
             case 10:
                 WriteFontCentre("THANK YOU FOR PLAYING!", 0, 0, Color.White);
@@ -333,7 +351,11 @@ public class LevelFour : Level
             case 12:
                 WriteFontCentre("THE END", 0, 0, Color.White);
                 break;
-            
+            case 13:
+                WriteFontCentre("Music by Eric Matyas", 0, -20, Color.White);
+                WriteFontCentre("www.soundimage.org", 0, 20, Color.White);
+                break;
+
             default:
                 game.GraphicsDevice.Clear(Color.Black);
                 break;

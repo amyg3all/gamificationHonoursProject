@@ -16,13 +16,12 @@ public class TitleScreenState : State
         : base(game)
     {
         game.PlayBackgroundMusic();
-        game.toggleHealthKnowledge(false);
-        game.unsetRanOutOfTime();
+        game.ToggleHealthKnowledge(false);
+        game.UnsetRanOutOfTime();
     }
 
     public override void LoadContent()
     {
-        // load the image for the Title Screen
         _titleScreenTexture = game.Content.Load<Texture2D>("Backgrounds/TitleScreen");
 
         BakeFont();
@@ -30,14 +29,13 @@ public class TitleScreenState : State
 
     public override void Update(GameTime gameTime)
     {
+        // switches to the current level start, default is one but if you die goes to current level
         var currentKeyboardState = Keyboard.GetState();
 
-        // Check if Enter is pressed and not held down
         if (
-                currentKeyboardState.IsKeyDown(Keys.Enter)
-                && !_previousKeyboardState.IsKeyDown(Keys.Enter)
-            )
-            // change to game play
+            currentKeyboardState.IsKeyDown(Keys.Enter)
+            && !_previousKeyboardState.IsKeyDown(Keys.Enter)
+        )
             game.ChangeState(new GamePlayState(game, game.GetCurrentLevel()));
 
         _previousKeyboardState = currentKeyboardState;
@@ -45,23 +43,22 @@ public class TitleScreenState : State
 
     public override void Draw(GameTime gameTime)
     {
+        // positions the title screen background and the title
         game.GraphicsDevice.Clear(Color.Black);
 
-        // calculate the position of the image
         var imageWidth = (int)(game.GraphicsDevice.Viewport.Width * 0.7);
         var imageHeight = (int)(game.GraphicsDevice.Viewport.Height * 0.7);
         var imagePositionX = (game.GraphicsDevice.Viewport.Width - imageWidth) / 2 + 150;
         var imagePositionY = (game.GraphicsDevice.Viewport.Height - imageHeight) / 2;
 
-        // Draw the title screen texture
         game.SpriteBatch.Begin();
-        // image
+
         game.SpriteBatch.Draw(
             _titleScreenTexture,
             new Rectangle(imagePositionX, imagePositionY, imageWidth, imageHeight),
             Color.White
         );
-        // Text
+
         WriteFont("OXYGEN ODYSSEY", 60, 200, Color.White);
         WriteFont(">PRESS ENTER<", 60, 250, Color.White);
 
